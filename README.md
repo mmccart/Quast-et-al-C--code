@@ -1,1 +1,1 @@
-# Quast-et-al-C-code
+# Quast-et-al-C++_code
