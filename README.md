@@ -1,5 +1,5 @@
 # Quast-et-al-C++_code
-//
+// The code has been changed due to an error in the original version of the code. The changes do not affect the main results or conclusions. Specifically, in the updated code, we decrease the PV population counts by 1 in lines 835 and 866. In order to compensate for resultant changes in the PV excitability, PV gap junction conductance (gelec) is increased to from 0.01 to 0.05 (line 760), PV applied current is increased from 0 to 0.1 (lines 837 and 868) and GABAa conductance between PV groups (gfsX) in increased from 0.25 to 0.5.
 //  QuastEtAlCodeFinal.cpp
 //  
 //
@@ -756,8 +756,8 @@ void Derive( int svCount, int svCount2, double y[SVCOUNT][SVCOUNT2], double k[SV
     double gabaFS2[FSCOUNT2];
     double gabaFSX2[FSCOUNT2];
     
-    double gfsX = 0.25; // 0.2
-    gelec = 0.01; // 0.01
+    double gfsX = 0.5; // 0.2
+    gelec = 0.05; // 0.01
     gfs_fs = 0.03; // 0.03
     gfsX = 0.25; // 0.25
     
@@ -818,7 +818,7 @@ void Derive( int svCount, int svCount2, double y[SVCOUNT][SVCOUNT2], double k[SV
         if (time <= 20000){ //20000
             gelec = 0;
             gfs_fs = 0.03/10;
-            gfsX = 0.25/10;
+            gfsX = 0.5/10; // changed from gfsX = 0.25/10;
         }
         
         
@@ -832,9 +832,9 @@ void Derive( int svCount, int svCount2, double y[SVCOUNT][SVCOUNT2], double k[SV
         -FSgl*(y[10][z]-fsEl)
         -gabaFS[z]
         -gabaFSX[z]
-        -gelec*(FSCOUNT*y[10][z]-(SumFS-y[10][z])) // all to all electrical connections
+        -gelec*((FSCOUNT-1)*y[10][z]-(SumFS-y[10][z])) // all to all electrical connections
         -gTCi[z]*(y[10][z] - 0)
-        +0;
+        +0.1;
  //       +IappFS[z];
         
         k[ 11 ][z] = 0.32*(y[10][z]+54)/(1-exp(-(y[10][z]+54)/4))*(1-y[11][z])-0.28*(y[10][z]+27)/(exp((y[10][z]+27)/5)-1)*y[11][z];     // derivative equation for m
@@ -848,7 +848,7 @@ void Derive( int svCount, int svCount2, double y[SVCOUNT][SVCOUNT2], double k[SV
         if (time <= 20000){ //20000
             gelec = 0;
             gfs_fs = 0.03/10; // 0.03/10
-            gfsX = 0.25/10; //0.25/10
+            gfsX = 0.5/10; //0.25/10, changed from gfsX = 0.25/10;
         }
         
        
@@ -863,9 +863,9 @@ void Derive( int svCount, int svCount2, double y[SVCOUNT][SVCOUNT2], double k[SV
         -FSgl*(y[15][z]-fsEl)
         -gabaFS2[z]
         -gabaFSX2[z]
-        -gelec*(FSCOUNT2*y[15][z]-(SumFS2-y[15][z])) // all to all electrical connections
+        -gelec*((FSCOUNT2-1)*y[15][z]-(SumFS2-y[15][z])) // all to all electrical connections
         -gTCfs2[z]*(y[15][z] - 0)
-         +0;
+         +0.1;
     //    +IappFS2[z];
         
         k[ 16 ][z] = 0.32*(y[15][z]+54)/(1-exp(-(y[15][z]+54)/4))*(1-y[16][z])-0.28*(y[15][z]+27)/(exp((y[15][z]+27)/5)-1)*y[16][z];     // derivative equation for m
