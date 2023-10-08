@@ -759,7 +759,7 @@ void Derive( int svCount, int svCount2, double y[SVCOUNT][SVCOUNT2], double k[SV
     double gfsX = 0.5; // 0.2
     gelec = 0.05; // 0.01
     gfs_fs = 0.03; // 0.03
-    gfsX = 0.25; // 0.25
+    gfsX = 0.5; // 0.25
     
   
     // To simulate bouts of "sleep"
